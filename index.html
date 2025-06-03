@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>地図マーカーアプリ</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen@2.4.0/Control.FullScreen.css" />
@@ -13,7 +13,12 @@
         <div class="header">
             <h1>地図マーカーアプリ</h1>
             <div class="controls">
-                <input type="file" id="csvFile" accept=".csv">
+                <div class="file-input-wrapper">
+                    <input type="file" id="csvFile" accept=".csv" class="file-input">
+                    <label for="csvFile" class="file-label">
+                        <span class="file-label-text">CSVファイルを選択</span>
+                    </label>
+                </div>
                 <button id="downloadSample">サンプルCSVをダウンロード</button>
             </div>
         </div>
