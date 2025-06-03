@@ -33,14 +33,19 @@ const markers = L.markerClusterGroup({
 });
 map.addLayer(markers);
 
+// ファイル選択ボタンの処理
+document.querySelector('.file-select-button').addEventListener('click', function() {
+    document.getElementById('csvFile').click();
+});
+
 // CSVファイルの読み込み処理
 document.getElementById('csvFile').addEventListener('change', function(e) {
     const file = e.target.files[0];
-    const fileLabel = document.querySelector('.file-label-text');
+    const button = document.querySelector('.file-select-button');
     
     // ファイルが選択されていない場合は処理を中断
     if (!file) {
-        fileLabel.textContent = 'CSVファイルを選択';
+        button.textContent = 'CSVファイルを選択';
         return;
     }
 
@@ -48,12 +53,12 @@ document.getElementById('csvFile').addEventListener('change', function(e) {
     if (file.type !== 'text/csv' && !file.name.endsWith('.csv')) {
         alert('CSVファイルを選択してください。');
         this.value = ''; // ファイル選択をリセット
-        fileLabel.textContent = 'CSVファイルを選択';
+        button.textContent = 'CSVファイルを選択';
         return;
     }
 
     // ファイル名を表示
-    fileLabel.textContent = file.name;
+    button.textContent = file.name;
 
     const reader = new FileReader();
 
@@ -86,13 +91,13 @@ document.getElementById('csvFile').addEventListener('change', function(e) {
         } catch (error) {
             console.error('CSVファイルの処理中にエラーが発生しました:', error);
             alert('CSVファイルの処理中にエラーが発生しました。ファイルの形式を確認してください。');
-            fileLabel.textContent = 'CSVファイルを選択';
+            button.textContent = 'CSVファイルを選択';
         }
     };
 
     reader.onerror = function() {
         alert('ファイルの読み込み中にエラーが発生しました。');
-        fileLabel.textContent = 'CSVファイルを選択';
+        button.textContent = 'CSVファイルを選択';
     };
 
     reader.readAsText(file);

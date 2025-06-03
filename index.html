@@ -13,11 +13,9 @@
         <div class="header">
             <h1>地図マーカーアプリ</h1>
             <div class="controls">
-                <div class="file-input-wrapper">
-                    <input type="file" id="csvFile" accept=".csv" class="file-input">
-                    <label for="csvFile" class="file-label">
-                        <span class="file-label-text">CSVファイルを選択</span>
-                    </label>
+                <div class="file-input-container">
+                    <input type="file" id="csvFile" accept=".csv" capture="environment">
+                    <button type="button" class="file-select-button">CSVファイルを選択</button>
                 </div>
                 <button id="downloadSample">サンプルCSVをダウンロード</button>
             </div>

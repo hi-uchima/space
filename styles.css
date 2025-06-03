@@ -37,73 +37,72 @@ body {
     align-items: center;
 }
 
-/* ファイル入力 */
-.file-input-wrapper {
+/* ファイル入力コンテナ */
+.file-input-container {
     position: relative;
     width: 100%;
     max-width: 300px;
 }
 
-.file-input {
+.file-input-container input[type="file"] {
     position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.file-select-button {
     width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    cursor: pointer;
-    z-index: 2;
-}
-
-.file-label {
-    display: block;
-    padding: 15px;
-    background-color: #f8fafc;
-    border: 2px dashed #3498db;
-    border-radius: 8px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.file-label-text {
-    color: #2c3e50;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-.file-label:hover {
-    border-color: #2980b9;
-    background-color: #f1f5f9;
-}
-
-/* ボタン */
-button {
-    padding: 10px 20px;
+    padding: 15px 20px;
     background-color: #3498db;
     color: white;
     border: none;
     border-radius: 8px;
-    cursor: pointer;
+    font-size: 16px;
     font-weight: 500;
+    cursor: pointer;
     transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    display: block;
+    text-align: center;
 }
 
-button:hover {
+.file-select-button:hover {
     background-color: #2980b9;
     transform: translateY(-1px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-button:active {
+.file-select-button:active {
     transform: translateY(0);
+}
+
+/* モバイルデバイス向けのスタイル */
+@media (max-width: 768px) {
+    .file-input-container {
+        width: 100%;
+        max-width: none;
+    }
+
+    .file-select-button {
+        padding: 20px;
+        font-size: 16px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
 }
 
 /* 地図コンテナ */
@@ -225,14 +224,18 @@ button:active {
         height: 500px;
     }
 
-    .file-input-wrapper {
+    .file-input-container {
         width: 100%;
         max-width: none;
     }
 
-    .file-label {
+    .file-select-button {
         padding: 20px;
         font-size: 16px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .controls {
