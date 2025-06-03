@@ -36,31 +36,55 @@ map.addLayer(markers);
 // CSVファイルの読み込み処理
 document.getElementById('csvFile').addEventListener('change', function(e) {
     const file = e.target.files[0];
+    
+    // ファイルが選択されていない場合は処理を中断
+    if (!file) {
+        return;
+    }
+
+    // ファイルの種類をチェック
+    if (file.type !== 'text/csv' && !file.name.endsWith('.csv')) {
+        alert('CSVファイルを選択してください。');
+        this.value = ''; // ファイル選択をリセット
+        return;
+    }
+
     const reader = new FileReader();
 
     reader.onload = function(event) {
-        const csvData = event.target.result;
-        const rows = csvData.split('\n');
-        
-        // マーカーをクリア
-        markers.clearLayers();
+        try {
+            const csvData = event.target.result;
+            const rows = csvData.split('\n');
+            
+            // マーカーをクリア
+            markers.clearLayers();
 
-        // ヘッダーをスキップして処理
-        for (let i = 1; i < rows.length; i++) {
-            const columns = rows[i].split(',');
-            if (columns.length >= 4) {
-                const lat = parseFloat(columns[0]);
-                const lng = parseFloat(columns[1]);
-                const label = columns[2];
-                const description = columns[3];
+            // ヘッダーをスキップして処理
+            for (let i = 1; i < rows.length; i++) {
+                if (!rows[i].trim()) continue; // 空行をスキップ
+                
+                const columns = rows[i].split(',');
+                if (columns.length >= 4) {
+                    const lat = parseFloat(columns[0]);
+                    const lng = parseFloat(columns[1]);
+                    const label = columns[2].trim();
+                    const description = columns[3].trim();
 
-                if (!isNaN(lat) && !isNaN(lng)) {
-                    const marker = L.marker([lat, lng], { icon: customIcon })
-                        .bindPopup(`<b>${label}</b><br>${description}`);
-                    markers.addLayer(marker);
+                    if (!isNaN(lat) && !isNaN(lng)) {
+                        const marker = L.marker([lat, lng], { icon: customIcon })
+                            .bindPopup(`<b>${label}</b><br>${description}`);
+                        markers.addLayer(marker);
+                    }
                 }
             }
+        } catch (error) {
+            console.error('CSVファイルの処理中にエラーが発生しました:', error);
+            alert('CSVファイルの処理中にエラーが発生しました。ファイルの形式を確認してください。');
         }
+    };
+
+    reader.onerror = function() {
+        alert('ファイルの読み込み中にエラーが発生しました。');
     };
 
     reader.readAsText(file);
