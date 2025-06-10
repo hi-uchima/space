@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Earth Map</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- CesiumJS CDN -->
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.120/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+</head>
+<body>
+    <div id="mapSelector" style="display:none;"></div>
+    <nav id="menuNav">
+      <input type="checkbox" id="menuToggle" hidden>
+      <label for="menuToggle" id="menuBtn">
+        <span></span><span></span><span></span>
+      </label>
+      <div id="csvMenu">
+        <div class="menuTitle">CSV管理</div>
+        <input type="file" id="csvUpload" accept=".csv">
+        <button id="downloadSample">サンプルCSVダウンロード</button>
+        <label for="csvList">CSV切替：</label>
+        <select id="csvList"></select>
+        <button id="deleteCsv">選択CSV削除</button>
+      </div>
+    </nav>
+    <div id="cesiumContainer"></div>
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.120/Build/Cesium/Cesium.js"></script>
+    <script src="script.js"></script>
+    <script>
+    // 検索ボタン（ジオコーダー）とナビゲーションヘルプボタンを非表示にし、地図選択アイコンをその位置に表示
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        var geocoder = document.querySelector('.cesium-viewer-geocoderContainer');
+        if (geocoder) {
+          geocoder.style.display = 'none';
+          // 地球アイコンボタンをジオコーダーの親要素に追加
+          var globeBtn = document.createElement('button');
+          globeBtn.id = 'mapIconBtn';
+          globeBtn.title = '地図の種類を選択';
+          globeBtn.style.background = 'rgba(255,255,255,0.95)';
+          globeBtn.style.border = 'none';
+          globeBtn.style.borderRadius = '6px';
+          globeBtn.style.padding = '4px 8px';
+          globeBtn.style.marginRight = '6px';
+          globeBtn.style.cursor = 'pointer';
+          globeBtn.innerHTML = '<img src="https://img.icons8.com/ios-filled/28/000000/globe--v1.png" alt="地図アイコン" style="vertical-align:middle;">';
+          var select = document.createElement('select');
+          select.id = 'imagerySelect';
+          select.style.marginLeft = '6px';
+          select.style.display = 'none';
+          select.innerHTML = '<option value="osm">OpenStreetMap</option><option value="gsi">国土地理院（日本語）</option><option value="esri">ESRI World Imagery</option>';
+          globeBtn.addEventListener('click', function() {
+            select.style.display = select.style.display === 'none' ? 'inline-block' : 'none';
+          });
+          select.addEventListener('change', function(e) {
+            window.changeImagery && window.changeImagery(e.target.value);
+          });
+          // 既存のジオコーダーの親要素に追加
+          if (geocoder.parentNode) {
+            geocoder.parentNode.insertBefore(globeBtn, geocoder);
+            geocoder.parentNode.insertBefore(select, geocoder);
+          }
+          // script.jsの地図切替イベントと同期
+          window.imagerySelect = select;
+        }
+        // ナビゲーションヘルプボタンも非表示
+        var navHelp = document.querySelector('.cesium-navigationHelpButton-wrapper');
+        if (navHelp) navHelp.style.display = 'none';
+      }, 500);
+    });
+    </script>
+</body>
+</html>

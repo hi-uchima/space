@@ -1,0 +1,9 @@
+version: '3'
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8000:80"
+    volumes:
+      - ./docs:/usr/share/nginx/html/docs:ro
+      - ./default.conf:/etc/nginx/conf.d/default.conf:ro 

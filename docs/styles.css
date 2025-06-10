@@ -1,0 +1,148 @@
+/* --- mapSelector（非表示）--- */
+#mapSelector {
+  display: none;
+}
+
+/* --- 地球アイコン地図切替 --- */
+#mapIconBtn {
+  background: rgba(255,255,255,0.95);
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  margin: 0 8px 0 0;
+  cursor: pointer;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.10);
+  transition: background 0.2s;
+  vertical-align: middle;
+}
+#mapIconBtn:hover {
+  background: #e0e0e0;
+}
+#imagerySelect {
+  margin-left: 6px;
+  border-radius: 5px;
+  border: 1px solid #bbb;
+  padding: 4px 8px;
+  font-size: 1rem;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+/* --- ハンバーガーメニュー --- */
+#menuNav {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 300;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+#menuBtn {
+  margin-right: 8px;
+  display: flex;
+  flex-direction: column;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: rgba(255,255,255,0.95);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  z-index: 210;
+  border: none;
+  transition: background 0.2s;
+}
+#menuBtn:hover {
+  background: #e0e0e0;
+}
+#menuBtn span {
+  display: block;
+  width: 26px;
+  height: 4px;
+  margin: 3px 0;
+  background: #333;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+#csvMenu {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(255,255,255,0.98);
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.10);
+  padding: 12px 10px 10px 10px;
+  min-width: 220px;
+  max-width: 90vw;
+  box-sizing: border-box;
+  position: static;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+#menuToggle:checked ~ #menuBtn ~ #csvMenu {
+  display: flex;
+}
+.menuTitle {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 6px;
+}
+#csvMenu input[type="file"], #csvMenu select, #csvMenu button {
+  font-size: 1em;
+  border-radius: 5px;
+  border: 1px solid #bbb;
+  padding: 4px 8px;
+  background: #fff;
+  margin-bottom: 2px;
+}
+#csvMenu button {
+  background: #f5f5f5;
+  border: 1px solid #bbb;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#csvMenu button:hover {
+  background: #e0e0e0;
+}
+
+@media (max-width: 600px) {
+  #menuNav {
+    flex-direction: column;
+    left: 2vw;
+    top: 8px;
+  }
+  #menuBtn {
+    margin-right: 0;
+    margin-bottom: 6px;
+    width: 36px;
+    height: 36px;
+  }
+  #csvMenu {
+    min-width: 140px;
+    max-width: 96vw;
+    width: 96vw;
+    left: 0;
+    right: auto;
+    padding: 10px 2vw 8px 2vw;
+    top: 0;
+    border-radius: 6px;
+    position: static;
+  }
+}
+html, body, #cesiumContainer {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+#cesiumContainer {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+}
+.cesium-viewer-geocoderContainer,
+.cesium-navigationHelpButton-wrapper {
+  display: none !important;
+}
